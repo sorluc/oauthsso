@@ -96,7 +96,6 @@ if (Tools::getValue('oasso_action') != '' and (Tools::getValue('oasso_token') ==
 			}
 
 			// Connection to
-//			$api_resource_url = ($api_connection_use_https ? 'https' : 'http') . '://' . $oauth_server_name . '/oauth/token';
 			$api_resource_url = ($api_connection_use_https ? 'https' : 'http') . '://' . $oauth_server_name . '/am/oauth2/alpha/access_token';
 			$api_resource_cmd = 'post';
 
