@@ -1062,7 +1062,8 @@ class OAuthSSOHelper {
 
     // Call OAuth 2.0 identity server
     $result = OAuthSSOHelper::do_oauth_request( $api->connection_handler,
-                                                $api->base_url . '/oauth/authorize',
+//                                                $api->base_url . '/oauth/authorize',
+                                                $api->base_url . '/am/oauth2/alpha/authorize',
                                                 'get',
                                                 array('client_id'     => $api->client_id,
                                                       'redirect_uri'  => $api->callback_uri,
