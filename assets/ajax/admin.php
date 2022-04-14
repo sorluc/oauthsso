@@ -96,11 +96,12 @@ if (Tools::getValue('oasso_action') != '' and (Tools::getValue('oasso_token') ==
 			}
 
 			// Connection to
-			$api_resource_url = ($api_connection_use_https ? 'https' : 'http') . '://' . $oauth_server_name . '/oauth/token';
+//			$api_resource_url = ($api_connection_use_https ? 'https' : 'http') . '://' . $oauth_server_name . '/oauth/token';
+			$api_resource_url = ($api_connection_use_https ? 'https' : 'http') . '://' . $oauth_server_name . '/am/oauth2/alpha/access_token';
 			$api_resource_cmd = 'post';
 
 			// Simulated call to API
-			$result = OAuthSSOHelper::do_oauth_request($api_connection_handler, $api_resource_url, $api_resource_cmd, array('grant_type' => 'client_credentials', 'client_id' => $client_id, 'client_secret' => $client_secret), 15);
+			$result = OAuthSSOHelper::do_oauth_request($api_connection_handler, $api_resource_url, $api_resource_cmd, array('grant_type' => 'client_credentials', 'client_id' => $client_id, 'client_secret' => $client_secret, 'scope' => 'openid profile'), 15);
 
 			// Parse result
 			if (is_object($result) and property_exists($result, 'http_code') and property_exists($result, 'http_data')) {

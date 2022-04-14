@@ -39,7 +39,8 @@ class OAuthSSOHelper {
                          'Id',
                          'user_id',
                          'user_login',
-                         'user_email');
+                         'user_email',
+                         'email');
 
     // Find the first property that is present
     foreach($properties as $prop) {
@@ -92,7 +93,8 @@ class OAuthSSOHelper {
       $customer = new Customer();
       $customer->id = $result['id_customer'];
       foreach ($result as $key => $value) {
-        if (key_exists($key, $customer)) {
+//        if (key_exists($key, $customer)) {
+        if (!isset($customer->{$key})) {  
           $customer->{$key} = $value;
         }
       }
@@ -104,6 +106,10 @@ class OAuthSSOHelper {
     // Invalid customer specified.
     return false;
   }
+
+
+  //////////
+
 
   public static function update_user_data($id_customer, $data) {
     // Allow some variants
@@ -138,6 +144,10 @@ class OAuthSSOHelper {
     // Done
     return $result;
   }
+  
+  
+  //////////
+
 
   /**
    * Logs a given customer in.
@@ -187,7 +197,8 @@ class OAuthSSOHelper {
     $context->cart->save();
 
     $context->cookie->id_cart = (int) $context->cart->id;
-    $context->cookie->update();
+//    $context->cookie->update();
+    $context->cookie->write();
     $context->cart->autosetProductAddress();
 
     Hook::exec('actionAuthentication');
@@ -572,7 +583,8 @@ class OAuthSSOHelper {
    */
   public static function check_fsockopen($secure = true, $host = '') {
     if (empty($host)) $host = Configuration::get('OASSO_OAUTH_SERVER_NAME');
-    $result = self::do_fsockopen_request(($secure ? 'https' : 'http') . '://' . $host . '/');
+//    $result = self::do_fsockopen_request(($secure ? 'https' : 'http') . '://' . $host . '/');
+    $result = self::do_fsockopen_request(($secure ? 'https' : 'http') . '://' . $host . '/monitoring/health');
     if (is_object($result) and property_exists($result, 'http_code') and $result->http_code == 200) {
       if (property_exists($result, 'http_data')) {
         if (strlen($result->http_data) > 0) {
@@ -590,7 +602,8 @@ class OAuthSSOHelper {
   public static function check_curl($secure = true, $host = '') {
     if (empty($host)) $host = Configuration::get('OASSO_OAUTH_SERVER_NAME');
     if (in_array('curl', get_loaded_extensions()) and function_exists('curl_exec')) {
-      $result = self::do_curl_request(($secure ? 'https' : 'http') . '://' . $host . '/');
+//      $result = self::do_curl_request(($secure ? 'https' : 'http') . '://' . $host . '');
+      $result = self::do_curl_request(($secure ? 'https' : 'http') . '://' . $host . '/monitoring/health');
       if (is_object($result) and property_exists($result, 'http_code') and $result->http_code == 200) {
         if (property_exists($result, 'http_data')) {
           if (strlen($result->http_data) > 0) {
@@ -1054,7 +1067,8 @@ class OAuthSSOHelper {
                                                 array('client_id'     => $api->client_id,
                                                       'redirect_uri'  => $api->callback_uri,
                                                       'response_type' => 'code',
-                                                      'scope'         => 'profile',
+//                                                      'scope'         => 'profile',
+                                                      'scope'         => 'openid%20email%20profile',
                                                       'state'         => $CSRF_token));
 
     $error_code = 0;
@@ -1073,6 +1087,9 @@ class OAuthSSOHelper {
         // Redirect
         case 301 :
           // Redirect (this can be a login screen or a call to the callback)
+          Tools::redirect($result->redirect_url);
+        case 302 :
+          // Redirect 
           Tools::redirect($result->redirect_url);
         break;
 
@@ -1111,7 +1128,8 @@ class OAuthSSOHelper {
 
     // Call OAuth 2.0 identity server
     $result = OAuthSSOHelper::do_oauth_request( $api->connection_handler,
-                                                $api->base_url . '/oauth/token',
+//                                                $api->base_url . '/oauth/token',
+                                                $api->base_url . '/am/oauth2/alpha/access_token',
                                                 'post',
                                                 array('client_id'     => $api->client_id,
                                                       'client_secret' => $api->client_secret,
@@ -1192,7 +1210,8 @@ class OAuthSSOHelper {
 
     // Call OAuth 2.0 identity server
     $result = OAuthSSOHelper::do_oauth_request( $api->connection_handler,
-                                                $api->base_url . '/oauth/me',
+//                                                $api->base_url . '/oauth/me',
+                                                $api->base_url . '/am/oauth2/alpha/userinfo',
                                                 'get',
                                                 array('bearer' => $token->access_token));
 
@@ -1364,9 +1383,11 @@ class OAuthSSOHelper {
       // Account linking is enabled.
       if (Configuration::get('OASSO_LINK_ACCOUNT_DISABLE') != 1) {
         // Account linking is done based on user's email address
-        if (!empty($data['user_email'])) {
+//        if (!empty($data['user_email'])) {
+        if (!empty($data['email'])) {
           // Try to read the existing customer account.
-          if (($id_customer_tmp = self::get_id_customer_for_email_address($data['user_email'])) !== false) {
+//          if (($id_customer_tmp = self::get_id_customer_for_email_address($data['user_email'])) !== false) {
+          if (($id_customer_tmp = self::get_id_customer_for_email_address($data['email'])) !== false) {
             // Tie the user_token to the customer.
             if (self::link_tokens_to_id_customer($id_customer_tmp,
                 $data['user_token'],
@@ -1389,8 +1410,12 @@ class OAuthSSOHelper {
       $customer_email_notify = true;
 
       // Allow some variants
-      $data['user_first_name'] = empty($data['user_first_name']) ? $data['first_name'] : $data['user_first_name'];
-      $data['user_last_name']  = empty($data['user_last_name'])  ? $data['last_name']  : $data['user_last_name'];
+//      $data['user_first_name'] = empty($data['user_first_name']) ? $data['first_name'] : $data['user_first_name'];
+      $data['user_first_name'] = empty($data['user_first_name']) ? $data['given_name'] : $data['user_first_name'];
+//      $data['user_last_name']  = empty($data['user_last_name'])  ? $data['last_name']  : $data['user_last_name'];
+      $data['user_last_name']  = empty($data['user_last_name'])  ? $data['family_name']  : $data['user_last_name'];
+
+      $data['user_email'] = empty($data['user_email']) ? $data['email'] : $data['user_email'];
 
       // How do we have to proceed?
       switch (Configuration::get('OASSO_DATA_HANDLING')) {
@@ -1521,7 +1546,7 @@ class OAuthSSOHelper {
       return $result;
     }
 
-    // Parse prpperty value
+    // Parse property value
     switch ($format) {
       // List of comma separated values or a single value
       case 'list':
