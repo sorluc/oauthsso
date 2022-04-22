@@ -25,10 +25,13 @@
 
 {capture name='oauthsso_button_txt'}{l s='Login SSO' mod='oauthsso'}{/capture}
 {assign var='oasso_translated_button_txt' value=$smarty.capture.oauthsso_button_txt}
+
 {capture name='oauthsso_title'}{l s='Connect with:' mod='oauthsso'}{/capture}
 {assign var='oasso_translated_title' value=$smarty.capture.oauthsso_title}
+
 {capture name='oauthsso_title_login'}{l s='Log in with:' mod='oauthsso'}{/capture}
 {assign var='oasso_translated_title_login' value=$smarty.capture.oauthsso_title_login}
+
 {capture name='oauthsso_title_register'}{l s='Register with:' mod='oauthsso'}{/capture}
 {assign var='oasso_translated_title_register' value=$smarty.capture.oauthsso_title_register}
 
@@ -99,6 +102,39 @@
 		</p>
 	</div>
 {/if}
+
+
+
+
+
+
+
+
+oauth_sso_personal_information
+{* Location: CUSTOMER ACCOUNT FORM - Login SSO widget *}
+{if {$oasso_widget_location} eq 'personal_information'}
+	<div class="block oauth_sso_block oauth_sso_personal_information" id="oauth_sso_block_personal_information">
+	{if {$oasso_translated_title_register|strip} neq ' '}
+		<p class="title_block">{$oasso_translated_title_register}BLAAAAAAH</p>
+	{/if}
+		<p class="block_content">
+			<div class="oauth_sso_provider" id="oauth_sso_provider">
+				<a class="btn btn-primary btn-large btn-full-width oauth_sso_button" href="{$oasso_widget_sso_uri}" id="oauth_sso_button" rel="nofollow">
+        	<i class="fto-user icon_btn"></i> {$oasso_sso_provider nofilter}
+        </a>
+			</div>
+		</p>
+	</div>
+{/if}
+
+
+
+
+
+
+
+
+
 
 {* Location: LEFT COLUMN HOOK - Login SSO widget *}
 {if {$oasso_widget_location} eq 'left_column'}
