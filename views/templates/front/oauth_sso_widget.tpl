@@ -23,7 +23,7 @@
 *
 *}
 
-{capture name='oauthsso_button_txt'}{l s='Login SSO' mod='oauthsso'}{/capture}
+{capture name='oauthsso_button_txt'}{l s='Login SSOOOO' mod='oauthsso'}{/capture}
 {assign var='oasso_translated_button_txt' value=$smarty.capture.oauthsso_button_txt}
 
 {capture name='oauthsso_title'}{l s='Connect with:' mod='oauthsso'}{/capture}
