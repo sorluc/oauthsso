@@ -87,6 +87,7 @@
 
 
 
+
 {* Location: CUSTOMER ACCOUNT FORM - Login SSO widget *}
 {if {$oasso_widget_location} eq 'customer_account_form'}
 	<div class="block oauth_sso_block oauth_sso_customer_account_form" id="oauth_sso_block_customer_account_form">
@@ -110,7 +111,7 @@
 
 
 
-oauth_sso_personal_information
+
 {* Location: CUSTOMER ACCOUNT FORM - Login SSO widget *}
 {if {$oasso_widget_location} eq 'personal_information'}
 	<div class="block oauth_sso_block oauth_sso_personal_information" id="oauth_sso_block_personal_information">

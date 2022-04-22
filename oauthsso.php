@@ -177,7 +177,7 @@ class OAuthSSO extends Module {
 
 
       // JavaScript Hook for Cart checkout
-      $js_hook_auth_disable = (Tools::getValue('OASSO_JS_HOOK_PERSO_DISABLE') == 1 ? 1 : 0);
+      $js_hook_perso_disable = (Tools::getValue('OASSO_JS_HOOK_PERSO_DISABLE') == 1 ? 1 : 0);
 
 
 
@@ -1132,7 +1132,7 @@ class OAuthSSO extends Module {
 
     $smarty->assign('oasso_perso_disable',               (Configuration::get('OASSO_JS_HOOK_PERSO_DISABLE')       == 1 ? 'true' : 'false'));
     
-    
+
     $smarty->assign('oasso_login_disable',              (Configuration::get('OASSO_JS_HOOK_LOGIN_DISABLE')      == 1 ? 'true' : 'false'));
     $smarty->assign('oasso_hook_left_disable',          (Configuration::get('OASSO_HOOK_LEFT_DISABLE')          == 1 ? 'true' : 'false'));
     $smarty->assign('oasso_hook_right_disable',         (Configuration::get('OASSO_HOOK_RIGHT_DISABLE')         == 1 ? 'true' : 'false'));
