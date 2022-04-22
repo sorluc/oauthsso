@@ -64,7 +64,7 @@ class OAuthSSO extends Module {
   public function __construct() {
     $this->name = 'oauthsso';
     $this->tab = 'front_office_features';
-    $this->version = '1.0.2';
+    $this->version = '1.0.3';
     $this->author = 'Stephane Orluc <stephane.orluc@forgerock.com> based on Carlos Cid\'s work <carlos@fishandbits.es>';
     $this->need_instance = 0;
     $this->ps_versions_compliancy = array(

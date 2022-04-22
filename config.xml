@@ -2,7 +2,7 @@
 <module>
 	<name>oauthsso</name>
 	<displayName><![CDATA[OAuth 2.0 Single SignOn Client]]></displayName>
-	<version><![CDATA[1.0.2]]></version>
+	<version><![CDATA[1.0.3]]></version>
 	<description><![CDATA[Provides a mechanism to identify users from an OAuth 2.0 Identity Server, allowing the Single SignOn of users in your entire organization.]]></description>
 	<author><![CDATA[Stephane Orluc <stephane.orluc@forgerock.com>]]></author>
 	<tab><![CDATA[front_office_features]]></tab>
