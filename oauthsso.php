@@ -445,6 +445,14 @@ class OAuthSSO extends Module {
           <p>' . $this->l('All OAuth 2.0 single SignOn widgets has the class \'oauth_sso_block\'') . '</p>
           <p>' . $this->l('Login form widget (class and ID) \'oauth_sso_customer_login_form\'') . '</p>
           <p>' . $this->l('Customer account form widget (class and ID) \'oauth_sso_customer_account_form\'') . '</p>
+
+
+          <p>' . $this->l('BLAH Customer account form widget (class and ID) \'oauth_sso_personal_information\'') . '</p>
+
+          
+
+
+
           <p>' . $this->l('Custom widget (class and ID) \'oauth_sso_custom\'') . '</p>
           <p>' . $this->l('Left column widget: class \'oauth_sso_block_column\' ID: \'oauth_sso_block_left_column\'') . '</p>
           <p>' . $this->l('Right column widget: class \'oauth_sso_block_column\' ID: \'oauth_sso_block_right_column\'') . '</p>
@@ -902,6 +910,16 @@ class OAuthSSO extends Module {
           }
           break;
 
+
+        // Customer Login Form in cart
+        case 'personal_information':
+          if (Configuration::get('OASSO_JS_HOOK_AUTH_DISABLE') != 1) {
+              $widget_enable = true;
+              $widget_location = $target;
+          }
+          break;
+
+
         // Left Column
         case 'left_column':
           if (Configuration::get('OASSO_HOOK_LEFT_DISABLE') != 1) {
@@ -973,7 +991,8 @@ class OAuthSSO extends Module {
    * Hook: displayPersonalInformationTop
    */
   public function hookDisplayPersonalInformationTop($params) {
-    return $this->hookGeneric($params, 'customer_account_form');
+//    return $this->hookGeneric($params, 'customer_account_form');
+    return $this->hookGeneric($params, 'personal_information');
   }
 
 
