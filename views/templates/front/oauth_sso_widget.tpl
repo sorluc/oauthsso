@@ -71,7 +71,6 @@
 	<div class="block oauth_sso_block oauth_sso_customer_login_form" id="oauth_sso_block_customer_login_form">
 	{if {$oasso_translated_title_login|strip} neq ' '}
 		<p class="title_block">{$oasso_translated_title_login}</p>
-		BLAAAAAH
 	{/if}
 		<p class="block_content">
 			<div class="oauth_sso_provider" id="oauth_sso_provider">
