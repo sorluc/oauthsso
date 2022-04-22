@@ -53,6 +53,9 @@ class OAuthSSO extends Module {
     'displayHeader'                 => array(),
     // Scripts
     'displayFooterAfter'            => array()
+
+    // Add in cart
+    ,'cart' => array('pos' => 1),
   );
 
   /**
@@ -964,6 +967,18 @@ class OAuthSSO extends Module {
   public function hookDisplayCustomerAccountFormTop($params) {
     return $this->hookGeneric($params, 'customer_account_form');
   }
+
+
+    /**
+   * Hook: cart
+   */
+  public function hookCart($params) {
+    return $this->hookGeneric($params, 'customer_account_form');
+  }
+
+
+
+
 
   /**
    * Hook: Left Column
