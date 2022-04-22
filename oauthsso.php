@@ -86,6 +86,9 @@ class OAuthSSO extends Module {
       Configuration::updateValue('OASSO_API_PORT', '443');
       Configuration::updateValue('OASSO_LINK_ACCOUNT_DISABLE', 0);
       Configuration::updateValue('OASSO_JS_HOOK_AUTH_DISABLE', 0);
+
+      Configuration::updateValue('OASSO_JS_HOOK_PERSO_DISABLE', 0);
+
       Configuration::updateValue('OASSO_JS_HOOK_LOGIN_DISABLE', 0);
       Configuration::updateValue('OASSO_HOOK_LEFT_DISABLE', 0);
       Configuration::updateValue('OASSO_HOOK_RIGHT_DISABLE', 0);
@@ -169,6 +172,21 @@ class OAuthSSO extends Module {
       // JavaScript Hook for Authentication
       $js_hook_auth_disable = (Tools::getValue('OASSO_JS_HOOK_AUTH_DISABLE') == 1 ? 1 : 0);
 
+
+
+
+
+      // JavaScript Hook for Cart checkout
+      $js_hook_auth_disable = (Tools::getValue('OASSO_JS_HOOK_PERSO_DISABLE') == 1 ? 1 : 0);
+
+
+
+
+
+
+
+
+
       // JavaScript Hook for Login Page
       $js_hook_login_disable = (Tools::getValue('OASSO_JS_HOOK_LOGIN_DISABLE') == 1 ? 1 : 0);
 
@@ -209,6 +227,16 @@ class OAuthSSO extends Module {
       Configuration::updateValue('OASSO_API_HANDLER', $api_handler);
       Configuration::updateValue('OASSO_API_PORT', $api_port);
       Configuration::updateValue('OASSO_JS_HOOK_AUTH_DISABLE', $js_hook_auth_disable);
+
+
+
+
+      Configuration::updateValue('OASSO_JS_HOOK_PERSO_DISABLE', $js_hook_perso_disable);
+
+
+
+
+
       Configuration::updateValue('OASSO_JS_HOOK_LOGIN_DISABLE', $js_hook_login_disable);
       Configuration::updateValue('OASSO_HOOK_LEFT_DISABLE', $hook_left_disable);
       Configuration::updateValue('OASSO_HOOK_RIGHT_DISABLE', $hook_right_disable);
@@ -258,6 +286,17 @@ class OAuthSSO extends Module {
 
     // Hook Authentication
     $js_hook_auth_disable = Configuration::get('OASSO_JS_HOOK_AUTH_DISABLE') == 1 ? 1 : 0;
+
+
+
+
+
+    // Hook Cart
+    $js_hook_perso_disable = Configuration::get('OASSO_JS_HOOK_PERSO_DISABLE') == 1 ? 1 : 0;
+
+
+
+
 
     // Hook Login Page
     $js_hook_login_disable = Configuration::get('OASSO_JS_HOOK_LOGIN_DISABLE') == 1 ? 1 : 0;
@@ -378,6 +417,26 @@ class OAuthSSO extends Module {
       		<input type="radio" name="OASSO_JS_HOOK_AUTH_DISABLE" id="OASSO_JS_HOOK_AUTH_DISABLE_1" value="1" ' . ($js_hook_auth_disable == 1 ? 'checked="checked"' : '') . ' /> ' . $this->l('Disable') . '<br />
       	</div>
       </fieldset>
+
+
+
+
+
+
+      <fieldset style="margin-top:20px">
+      	<legend>' . $this->l('Registration Page Cart') . '</legend>
+      	<div class="oasso_notice">' . $this->l('Displays Single SignOn button on the create account page of your shop') . '</div>
+      	<label>' . $this->l('Enable Registration Page Hook Cart?') . '</label>
+      	<div class="margin-form" style="margin-bottom: 20px;">
+      		<input type="radio" name="OASSO_JS_HOOK_PERSO_DISABLE" id="OASSO_JS_HOOK_PERSO_DISABLE_0" value="0" ' . ($js_hook_auth_disable != 1 ? 'checked="checked"' : '') . ' /> ' . $this->l('Enable') . '&nbsp;
+      		<input type="radio" name="OASSO_JS_HOOK_PERSO_DISABLE" id="OASSO_JS_HOOK_PERSO_DISABLE_1" value="1" ' . ($js_hook_auth_disable == 1 ? 'checked="checked"' : '') . ' /> ' . $this->l('Disable') . '<br />
+      	</div>
+      </fieldset>
+
+
+
+
+
 
       <fieldset style="margin-top:20px">
       	<legend>' . $this->l('Hook: Navegation Menu') . '</legend>
@@ -911,13 +970,15 @@ class OAuthSSO extends Module {
           break;
 
 
+
         // Customer Login Form in cart
         case 'personal_information':
-          if (Configuration::get('OASSO_JS_HOOK_AUTH_DISABLE') != 1) {
+          if (Configuration::get('OASSO_JS_HOOK_PERSO_DISABLE') != 1) {
               $widget_enable = true;
               $widget_location = $target;
           }
           break;
+
 
 
         // Left Column
@@ -1067,6 +1128,11 @@ class OAuthSSO extends Module {
     $smarty->assign('oasso_oauth_server_name',           Configuration::get('OASSO_OAUTH_SERVER_NAME'));
     $smarty->assign('oasso_data_handling',               Configuration::get('OASSO_DATA_HANDLING'));
     $smarty->assign('oasso_auth_disable',               (Configuration::get('OASSO_JS_HOOK_AUTH_DISABLE')       == 1 ? 'true' : 'false'));
+    
+
+    $smarty->assign('oasso_perso_disable',               (Configuration::get('OASSO_JS_HOOK_PERSO_DISABLE')       == 1 ? 'true' : 'false'));
+    
+    
     $smarty->assign('oasso_login_disable',              (Configuration::get('OASSO_JS_HOOK_LOGIN_DISABLE')      == 1 ? 'true' : 'false'));
     $smarty->assign('oasso_hook_left_disable',          (Configuration::get('OASSO_HOOK_LEFT_DISABLE')          == 1 ? 'true' : 'false'));
     $smarty->assign('oasso_hook_right_disable',         (Configuration::get('OASSO_HOOK_RIGHT_DISABLE')         == 1 ? 'true' : 'false'));
