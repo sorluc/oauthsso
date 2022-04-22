@@ -32,6 +32,8 @@
 {capture name='oauthsso_title_register'}{l s='Register with:' mod='oauthsso'}{/capture}
 {assign var='oasso_translated_title_register' value=$smarty.capture.oauthsso_title_register}
 
+<p class="title_block">{$oasso_widget_location}</p>
+
 {* Location: HEAD - Custom CSS *}
 {if {$oasso_widget_location} eq 'head'}
 	{if !empty($oasso_custom_css)}
@@ -79,6 +81,8 @@
 		</p>
 	</div>
 {/if}
+
+
 
 {* Location: CUSTOMER ACCOUNT FORM - Login SSO widget *}
 {if {$oasso_widget_location} eq 'customer_account_form'}
