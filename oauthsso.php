@@ -54,8 +54,8 @@ class OAuthSSO extends Module {
     // Scripts
     'displayFooterAfter'            => array()
 
-    // Add in cart
-    ,'cart' => array('pos' => 1),
+    // Add in displayPersonalInformationTop
+    ,'displayPersonalInformationTop' => array('pos' => 1),
   );
 
   /**
@@ -970,9 +970,9 @@ class OAuthSSO extends Module {
 
 
     /**
-   * Hook: cart
+   * Hook: displayPersonalInformationTop
    */
-  public function hookCart($params) {
+  public function hookDisplayPersonalInformationTop($params) {
     return $this->hookGeneric($params, 'customer_account_form');
   }
 
